@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+  --font-elegant: "Cormorant Garamond", serif;
+
+  --color-brand-beige: #f5f2ed;
+  --color-brand-gold: #c5a059;
+  --color-brand-gold-light: #e2d1a8;
+  --color-brand-pastel: #fdfbf7;
+  --color-brand-ink: #1a1a1a;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-beige text-brand-ink font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+.glass-card {
+  @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-sm;
+}
+
+.btn-primary {
+  @apply bg-brand-gold hover:bg-brand-gold/90 text-white px-8 py-3 rounded-full transition-all duration-300 font-medium tracking-wide;
+}
+
+.btn-secondary {
+  @apply border border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-white px-8 py-3 rounded-full transition-all duration-300 font-medium tracking-wide;
+}
