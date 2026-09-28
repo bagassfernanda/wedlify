@@ -100,7 +100,7 @@ export default function WeddingDemo() {
             transition={{ duration: 0.6 }}
             className="flex justify-center"
           >
-            <div className="relative">
+            <div className="flex flex-col items-center">
               {/* Phone frame */}
               <div className="relative w-[300px] h-[620px] bg-brand-ink rounded-[3rem] shadow-2xl border-[10px] border-brand-ink overflow-hidden">
                 {/* Notch */}
@@ -112,8 +112,7 @@ export default function WeddingDemo() {
                     <iframe
                       src={DEMO_URL}
                       title="Demo Undangan Digital"
-                      className="w-full h-full border-0 scale-[0.85] origin-top"
-                      style={{ width: '118%', marginLeft: '-9%' }}
+                      className="h-full w-full border-0"
                       onError={() => setIframeError(true)}
                     />
                   ) : (
@@ -136,10 +135,14 @@ export default function WeddingDemo() {
                 </div>
               </div>
 
-              {/* Floating badge */}
-              <div className="absolute -bottom-4 -right-4 bg-brand-gold text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg">
+              <a
+                href={DEMO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center justify-center rounded-md bg-brand-gold px-8 py-3 text-sm font-bold text-white shadow-lg shadow-brand-gold/20 transition-colors hover:bg-[#a26f31]"
+              >
                 Live Demo ✨
-              </div>
+              </a>
             </div>
           </motion.div>
         </div>

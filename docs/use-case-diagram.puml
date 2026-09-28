@@ -1,0 +1,60 @@
+@startuml use-case-diagram
+!pragma layout smetana
+left to right direction
+
+skinparam backgroundColor white
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 13
+skinparam shadowing false
+skinparam ArrowColor #555555
+skinparam actor {
+  BorderColor #333333
+  BackgroundColor white
+}
+skinparam usecase {
+  BorderColor #9C7A3C
+  BackgroundColor #FFF8EC
+}
+skinparam rectangle {
+  BorderColor #333333
+  FontStyle bold
+}
+
+title Use Case Diagram — Website Wedlify
+
+actor "Pengunjung\n(Calon Pelanggan)" as P
+actor "Admin Wedlify" as A
+
+rectangle "Website Wedlify" {
+  usecase "UC-01\nMemasuki Website" as UC01
+  usecase "UC-02\nMelihat Informasi\nLayanan & Testimoni" as UC02
+  usecase "UC-03\nMelihat Katalog\nTemplate" as UC03
+  usecase "UC-04\nMemfilter Template\nberdasarkan Kategori" as UC04
+  usecase "UC-05\nMelihat Preview\nTemplate" as UC05
+  usecase "UC-06\nMemilih Template" as UC06
+  usecase "UC-07\nMelihat Demo\nUndangan" as UC07
+  usecase "UC-08\nMelihat Paket Harga" as UC08
+  usecase "UC-09\nMemilih Paket" as UC09
+  usecase "UC-10\nMelakukan Pemesanan" as UC10
+  usecase "UC-11\nMemvalidasi Data\nPemesanan" as UC11
+  usecase "UC-12\nMenghubungi Admin" as UC12
+}
+
+P --> UC01
+P --> UC02
+P --> UC03
+P --> UC07
+P --> UC08
+P --> UC10
+P --> UC12
+
+UC03 <.. UC04 : <<extend>>
+UC03 <.. UC05 : <<extend>>
+UC03 <.. UC06 : <<extend>>
+UC08 <.. UC09 : <<extend>>
+UC10 ..> UC11 : <<include>>
+
+UC10 ---> A
+UC12 ---> A
+
+@enduml

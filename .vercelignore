@@ -1,0 +1,10 @@
+node_modules
+dist
+coverage
+.git
+.agents
+.codex
+.DS_Store
+*.log
+scripts
+public/ChatGPT Image*.png

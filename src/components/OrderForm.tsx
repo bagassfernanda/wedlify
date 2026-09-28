@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -9,38 +10,102 @@ const orderSchema = z.object({
   groomName: z.string().min(2, 'Nama pengantin pria wajib diisi'),
   weddingDate: z.string().min(1, 'Tanggal pernikahan wajib diisi'),
   location: z.string().min(5, 'Lokasi wajib diisi'),
+  selectedPackage: z.string().optional(),
+  selectedTheme: z.string().optional(),
+  designNotes: z.string().optional(),
   message: z.string().optional(),
 });
 
 type OrderFormData = z.infer<typeof orderSchema>;
 
-export default function OrderForm() {
+interface OrderFormProps {
+  selectedTemplateName?: string;
+  selectionVersion?: number;
+  selectedPackageName?: string;
+  packageSelectionVersion?: number;
+}
+
+export default function OrderForm({
+  selectedTemplateName = '',
+  selectionVersion = 0,
+  selectedPackageName = '',
+  packageSelectionVersion = 0,
+}: OrderFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setValue,
     reset,
   } = useForm<OrderFormData>({
     resolver: zodResolver(orderSchema),
+    defaultValues: {
+      brideName: '',
+      groomName: '',
+      weddingDate: '',
+      location: '',
+      selectedPackage: '',
+      selectedTheme: '',
+      designNotes: '',
+      message: '',
+    },
   });
 
+  useEffect(() => {
+    if (!selectedTemplateName) {
+      return;
+    }
+
+    setValue('selectedTheme', selectedTemplateName, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+  }, [selectedTemplateName, selectionVersion, setValue]);
+
+  useEffect(() => {
+    if (!selectedPackageName) {
+      return;
+    }
+
+    setValue('selectedPackage', selectedPackageName, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+  }, [selectedPackageName, packageSelectionVersion, setValue]);
+
   const onSubmit = async (data: OrderFormData) => {
+    const selectedPackage = data.selectedPackage?.trim() || 'Belum ditentukan';
+    const selectedTheme = data.selectedTheme?.trim() || 'Belum ditentukan';
+    const designNotes = data.designNotes?.trim();
+    const customMessage = data.message?.trim();
+
     const message = `Halo Wedlify! Saya ingin memesan undangan pernikahan. Berikut detailnya:
 
 👰 Pengantin Wanita: ${data.brideName}
 🤵 Pengantin Pria: ${data.groomName}
 📅 Tanggal Pernikahan: ${data.weddingDate}
-📍 Lokasi: ${data.location}${data.message ? `\n📝 Pesan: ${data.message}` : ''}
+📍 Lokasi: ${data.location}
+📦 Paket: ${selectedPackage}
+🎨 Tema/Referensi Desain: ${selectedTheme}${designNotes ? `\n🧾 Catatan Tema: ${designNotes}` : ''}${customMessage ? `\n📝 Pesan: ${customMessage}` : ''}
 
 Mohon informasi lebih lanjut. Terima kasih!`;
 
-    const whatsappUrl = `https://wa.me/6283832543989?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/6282228931153?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
-    reset();
+    reset({
+      brideName: '',
+      groomName: '',
+      weddingDate: '',
+      location: '',
+      selectedPackage,
+      selectedTheme,
+      designNotes: '',
+      message: '',
+    });
   };
 
   return (
-    <section id="order" className="py-24 bg-white">
+    <section id="order" className="scroll-mt-24 py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
@@ -123,6 +188,34 @@ Mohon informasi lebih lanjut. Terima kasih!`;
                   className="w-full px-4 py-3 rounded-xl border border-brand-beige bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold/20 focus:border-brand-gold transition-all"
                 />
                 {errors.location && <p className="text-red-500 text-xs mt-1 ml-1">{errors.location.message}</p>}
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-brand-ink/70 ml-1">Tema Undangan yang Dipilih</label>
+                <input
+                  {...register('selectedTheme')}
+                  placeholder="Pilih dari katalog atau tulis referensi tema manual"
+                  className="w-full px-4 py-3 rounded-xl border border-brand-beige bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold/20 focus:border-brand-gold transition-all"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-brand-ink/70 ml-1">Paket yang Dipilih</label>
+                <input
+                  {...register('selectedPackage')}
+                  placeholder="Pilih paket dari bagian harga atau tulis manual"
+                  className="w-full px-4 py-3 rounded-xl border border-brand-beige bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold/20 focus:border-brand-gold transition-all"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-brand-ink/70 ml-1">Referensi Desain / Catatan Tema</label>
+                <textarea
+                  {...register('designNotes')}
+                  placeholder="Contoh: saya ingin tema soft floral warna cream, gold, banyak foto, seperti undangan A atau link referensi..."
+                  rows={4}
+                  className="w-full px-4 py-3 rounded-xl border border-brand-beige bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold/20 focus:border-brand-gold transition-all resize-none"
+                />
               </div>
 
               <div className="space-y-2">

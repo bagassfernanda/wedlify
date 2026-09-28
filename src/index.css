@@ -6,11 +6,11 @@
   --font-sans: "Inter", sans-serif;
   --font-elegant: "Cormorant Garamond", serif;
 
-  --color-brand-beige: #f5f2ed;
-  --color-brand-gold: #c5a059;
-  --color-brand-gold-light: #e2d1a8;
-  --color-brand-pastel: #fdfbf7;
-  --color-brand-ink: #1a1a1a;
+  --color-brand-beige: #f7eee7;
+  --color-brand-gold: #b9823b;
+  --color-brand-gold-light: #e7c892;
+  --color-brand-pastel: #fffaf6;
+  --color-brand-ink: #2d211d;
 }
 
 @layer base {
@@ -28,9 +28,9 @@
 }
 
 .btn-primary {
-  @apply bg-brand-gold hover:bg-brand-gold/90 text-white px-8 py-3 rounded-full transition-all duration-300 font-medium tracking-wide;
+  @apply bg-brand-gold hover:bg-brand-gold/90 text-white px-8 py-3 rounded-md transition-all duration-300 font-semibold tracking-wide shadow-sm shadow-brand-gold/20;
 }
 
 .btn-secondary {
-  @apply border border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-white px-8 py-3 rounded-full transition-all duration-300 font-medium tracking-wide;
+  @apply border border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-white px-8 py-3 rounded-md transition-all duration-300 font-semibold tracking-wide;
 }
