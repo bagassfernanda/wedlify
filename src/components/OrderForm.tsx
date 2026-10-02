@@ -139,6 +139,15 @@ Mohon informasi lebih lanjut. Terima kasih!`;
                 <p className="font-medium text-brand-ink">Tinjau dan finalisasi desain</p>
               </div>
             </div>
+
+            <div className="mt-8 rounded-2xl border border-brand-gold/20 bg-brand-pastel p-6">
+              <p className="text-sm text-brand-ink/70 mb-3">
+                Ingin memantau status pesanan dan konfirmasi pembayaran? Pesan lewat akun Wedlify Anda.
+              </p>
+              <a href="#/orders/new" data-testid="account-order-link" className="btn-secondary inline-block px-6 py-3 text-sm">
+                Pesan Lewat Akun
+              </a>
+            </div>
           </motion.div>
 
           <motion.div

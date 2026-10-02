@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import AccountApp from './AccountApp';
+import { useRoute } from './lib/router';
 import Navbar from './components/Navbar';
 import WelcomeScreen from './components/WelcomeScreen';
 import Hero from './components/Hero';
@@ -19,6 +21,8 @@ import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 
 export default function App() {
+  const route = useRoute();
+  const previousRoute = useRef(route);
   const [hasEntered, setHasEntered] = useState(() => {
     return window.location.hash.length > 0 || sessionStorage.getItem('wedlify-entered') === 'true';
   });
@@ -56,6 +60,24 @@ export default function App() {
       });
     }, 80);
   };
+
+  useEffect(() => {
+    // Saat kembali dari halaman akun, gulir ke bagian landing page yang dituju.
+    if (previousRoute.current !== null && route === null) {
+      document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ block: 'start' });
+    }
+
+    previousRoute.current = route;
+  }, [route]);
+
+  if (route !== null) {
+    return (
+      <AccountApp
+        route={route}
+        preset={{ templateName: selectedTemplate.name, packageName: selectedPackage.name }}
+      />
+    );
+  }
 
   if (!hasEntered) {
     return <WelcomeScreen onEnter={handleEnter} />;

@@ -8,5 +8,11 @@ coverage/
 !.env.example
 .vercel
 
+# Database lokal (SQLite)
+data/
+
 # Gambar mentah yang tidak dipakai aplikasi
 public/ChatGPT Image*.png
+
+# Cadangan lokal sebelum fitur akun (kode lama sudah ada di riwayat git)
+backup-src-sebelum-fitur-akun.tar.gz

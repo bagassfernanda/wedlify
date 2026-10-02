@@ -177,6 +177,8 @@ const templates: CatalogTemplate[] = [
   },
 ];
 
+export const templateNames = templates.map((template) => template.title);
+
 export default function TemplateCatalog({ onSelectTemplate }: TemplateCatalogProps) {
   const [activeFilter, setActiveFilter] = useState<FilterCategory>('Semua');
   const [selectedTemplate, setSelectedTemplate] = useState<CatalogTemplate | null>(null);

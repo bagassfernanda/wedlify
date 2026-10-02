@@ -7,4 +7,5 @@ coverage
 .DS_Store
 *.log
 scripts
+data
 public/ChatGPT Image*.png

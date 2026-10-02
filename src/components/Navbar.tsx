@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { MouseEvent } from 'react';
 import { ChevronDown, Instagram, Mail, Menu, MessageCircle, X } from 'lucide-react';
+import { useAuth } from '@/src/context/AuthContext';
 import { cn } from '@/src/lib/utils';
 
 const whatsappUrl = 'https://wa.me/6282228931153?text=Halo%20Wedlify%21%20Saya%20ingin%20bertanya%20tentang%20undangan%20pernikahan.';
@@ -23,6 +24,12 @@ const contactLinks = [
 ];
 
 export default function Navbar() {
+  const { user } = useAuth();
+  const accountLink = !user
+    ? { name: 'Masuk', href: '#/login' }
+    : user.role === 'admin'
+      ? { name: 'Dashboard Admin', href: '#/admin' }
+      : { name: 'Pesanan Saya', href: '#/orders' };
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -87,7 +94,7 @@ export default function Navbar() {
           />
         </a>
 
-        <div className="hidden lg:flex items-center gap-7">
+        <div className="hidden lg:flex items-center gap-5 xl:gap-7">
           {navLinks.map((link) => {
             const isActive = activeSection === link.id;
 
@@ -148,6 +155,14 @@ export default function Navbar() {
               })}
             </div>
           </div>
+
+          <a
+            href={accountLink.href}
+            data-testid="account-link"
+            className="py-2 text-sm font-semibold text-brand-gold hover:underline"
+          >
+            {accountLink.name}
+          </a>
 
           <a href="#order" className="btn-primary px-7 py-3 text-sm">
             Pesan Sekarang
@@ -211,6 +226,14 @@ export default function Navbar() {
                 );
               })}
             </div>
+
+            <a
+              href={accountLink.href}
+              className="btn-secondary text-center"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {accountLink.name}
+            </a>
 
             <a
               href="#order"
